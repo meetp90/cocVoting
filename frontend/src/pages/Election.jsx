@@ -18,10 +18,25 @@ const Election = () => {
   const [modal, setModal] = useState(false);
   const [canVote, setCanVote] = useState(false);
   const [id, setId] = useState();
+  const [number, setNumber] = useState('');
+
   useEffect(() => {
     getElectionDetails();
     // getVotes();
   }, []);
+
+  const verifynumber = () => {
+    const article = {
+      otp: `${Math.floor(100000 + Math.random() * 900000)}`,
+    };
+    console.log(number);
+    axios
+      .post('http://localhost:3001/verification', article)
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
+
   const getElectionDetails = async () => {
     setTheAccount();
     const url = window.location.href;
@@ -166,7 +181,11 @@ const Election = () => {
               ).getFullYear()}
           </h1>
         </div>
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
           <input
             placeholder="Enter PAN number"
             value={panNumber}
@@ -175,6 +194,14 @@ const Election = () => {
             }}
           />
           <button onClick={() => verifyPan()}>Verify Pan</button>
+          <input
+            placeholder="Enter  number"
+            value={number}
+            onChange={(e) => {
+              setNumber(e.target.value);
+            }}
+          />
+          <button onClick={() => verifynumber()}>Verify number</button>
         </div>
         {electionDetails?.length > 0 ? (
           allCandidates.map((c) => {
