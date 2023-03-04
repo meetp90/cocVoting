@@ -1,13 +1,15 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
-import electionholder from '../assets/electionholder.png';
+import electionholder from '../assets/voting.svg';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { VotingContext } from '../context';
+
 const AddElection = () => {
+  const { typeOfElection, setTypeOfElection } = useState('');
   const { setTheAccount, connectingWithContract } = useContext(VotingContext);
   const [electionName, setElectionName] = useState('');
   const [noOfCandidates, setNoOfCandidates] = useState('');
@@ -65,13 +67,14 @@ const AddElection = () => {
     );
     console.log(response);
   };
+
   return (
     <div>
       <Navbar />
       <ToastContainer />
-      <div className="bg-[#001124] p-8 px-16 flex flex-row">
+      <div className="bg-[#121113] p-8 px-16 flex flex-row justify-around">
         <img src={electionholder} className="max-h-[500px]" />
-        <div className="ml-[450px] flex flex-col">
+        <div className="ml-[200px] flex flex-col border-2 p-4 rounded-t-lg border-[#6bcadb]">
           <h1 className="text-3xl text-white font-bold mb-4">
             Add an Election
           </h1>
@@ -85,7 +88,7 @@ const AddElection = () => {
             />
             <button
               onClick={() => generateUniqueId()}
-              className="text-white bg-[#015FC7] p-2 ml-8">
+              className="text-white bg-[#244663] p-2 ml-8">
               Generate Unique ID
             </button>
           </div>
@@ -124,9 +127,30 @@ const AddElection = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
+          <div className="p-1 rounded mt-4 relative w-full">
+            <select
+              placeholder="Choose election type"
+              className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-indigo-600">
+              <option
+                value={typeOfElection}
+                onChange={(e) => setTypeOfElection(e.target.value)}>
+                Approval Voting
+              </option>
+              <option
+                value={typeOfElection}
+                onChange={(e) => setTypeOfElection(e.target.value)}>
+                Ranked-Choice Voting
+              </option>
+              <option
+                value={typeOfElection}
+                onChange={(e) => setTypeOfElection(e.target.value)}>
+                Quadratic Voting
+              </option>
+            </select>
+          </div>
           <button
             onClick={() => addAnElection()}
-            className="text-white bg-[#015FC7] p-2 mt-8">
+            className="text-white bg-[#244663] p-2 mt-8">
             Add Election
           </button>
         </div>
