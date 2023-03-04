@@ -20,7 +20,7 @@ const AddElection = () => {
   const [id, setId] = useState(1);
   const generateUniqueId = async () => {
     const response = await axios.post(
-      'http://vismay9.pythonanywhere.com/election/',
+      'http://127.0.0.1:8000/openelection/',
 
       {
         election_name: electionName,

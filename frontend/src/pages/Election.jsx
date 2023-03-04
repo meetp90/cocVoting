@@ -144,7 +144,6 @@ const Election = () => {
         <div className="flex flex-row justify-between">
           <h1 className="text-black">
             Number of Candidates:{" "}
-            {parseInt(electionDetails.numberOfCandidates?._hex)}
           </h1>
           <h1 className="text-black">
             Election Held By: {electionDetails.electionHelderName}
@@ -190,7 +189,7 @@ const Election = () => {
                     onChange={() => setCandidate(c)}
                   />
                   <h1 className="text-lg col-span-5 text-black">{c}</h1>
-                  <h1 className="text-lg col-span-6 text-end">></h1>
+                  <h1 className="text-lg col-span-6 text-end"></h1>
                 </div>
               </div>
             );

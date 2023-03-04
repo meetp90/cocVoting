@@ -42,7 +42,6 @@ const Election = ({ election }) => {
         </h1>
       )}
       <h1 className="text-xl font-semibold col-span-1 text-end text-black">
-        >
       </h1>
     </Link>
   );
@@ -56,7 +55,7 @@ const Elections = () => {
 
   const fetchElections = async () => {
     const response = await axios.get(
-      "http://vismay9.pythonanywhere.com/election/"
+      "http://127.0.0.1:8000/openelection/"
     );
     console.log(response.data);
     setElections(response.data);

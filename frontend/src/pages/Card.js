@@ -10,46 +10,38 @@ function Card() {
 	}, []);
 
 	return (
-		<div className="home-cards-bg" style={{ backgroundColor: "#121113" }}>
+		<div className="home-cards-bg p-2" style={{ backgroundColor: "#121113" }}>
 			<div className="container">
 				<div className="card">
-					<div className="content">
-						<h1>1</h1>
-						<h3>Tell us which product are you interested in</h3>
-						{/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p> */}
+					<div className="content text-white">
+						<h2 className="title2">Features</h2>
+						<ol className="text-left">
+						<li  className="text-white my-2">1. Decentralized Governance</li>
+						<li className="text-white  my-2">2. Tamper-Proof Votes</li>
+						<li className="text-white my-2">3. Increased Accessibility</li>
+						<li className="text-white my-2">4. Multiple Voting Methods</li>
+						</ol>
 					</div>
 					<background style={{ float: "right" }} alt="vector-img" />
 				</div>
 
 				<div className="card">
 					<div className="content">
-						<h1>2</h1>
-						<h3>Receive free quotes from our suppliers</h3>
+						<h2 className="title2">About Us</h2>
+						<p className="text-white text-justify">As a cutting-edge technology company, we recognize the importance of a secure and transparent voting process. Our blockchain-based platform for decentralized governance is designed to address the issues faced by centralized voting systems, such as lack of transparency, vulnerability to fraud, and slow vote-counting processes.</p>
 					</div>
 				</div>
-				{/* <div style={{ float: 'right', padding: '0 30% 15% 0' }} classNameName="vector">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="100%"
-          height="400px"
-          viewBox="0 0 1037 727"
-          fill="none"
-          preserveAspectRatio="xMaxYMin meet">
-          <path
-            d="M71 726C371.746 631.121 297.304 334.83 589.178 338.407C881.051 341.985 935.393 182.72 1036 82"
-            stroke="#BBE1FA"
-          />
-          <path
-            d="M1 645C301.746 550.121 227.304 253.83 519.178 257.407C811.051 260.985 865.393 101.72 966 0.999985"
-            stroke="#BBE1FA"
-          />
-        </svg>
-      </div> */}
-
 				<div className="card">
 					<div className="content">
-						<h1>3</h1>
-						<h3>Choose the best offer and Seal the Deal!</h3>
+					<h2 className="title2">Follow these easy steps</h2>
+					<ol className="text-left">
+						<li  className="text-white my-2">1. Register yourself by filling the required details</li>
+						<li className="text-white  my-2">2. Signin as user</li>
+						<li className="text-white my-2">3. Go to vote option on dashboard</li>
+						<li className="text-white my-2">4. Give security key</li>
+						<li className="text-white my-2">5. Vote your candidate and submit</li>
+
+						</ol>
 					</div>
 				</div>
 			</div>
