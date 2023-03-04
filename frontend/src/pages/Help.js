@@ -22,9 +22,10 @@ export const Help = () => {
 		const fileRef = ref(storage, `videos/${file.name + v4()}`);
 		uploadBytes(fileRef, file).then((snapshot) => {
 			getDownloadURL(snapshot.ref).then((url) => {
-				setvideoList((prev) => [...prev, url]);
+				setvideoList((prev) => [...prev]);
+				// console.log(video);
 			});
-			// alert("Video Uploaded");
+			alert("Video Uploaded");
 		});
 	};
 
@@ -35,6 +36,10 @@ export const Help = () => {
 			response.items.forEach((item) => {
 				getDownloadURL(item).then((url) => {
 					setvideoList((prev) => [...prev, url]);
+					// console.log(video);
+					video.map((url) => {
+						setReels(url);
+					});
 				});
 			});
 		});
@@ -42,9 +47,10 @@ export const Help = () => {
 
 	useEffect(() => {
 		const q = query(collection(db, "reels"));
-		onSnapshot(q, (snapshot) =>
-			setReels(snapshot.docs.map((doc) => doc.data()))
-		);
+		onSnapshot(q, (snapshot) => {
+			setReels(snapshot.docs.map((doc) => doc.data()));
+			console.log(snapshot.docs);
+		});
 		console.log(reels);
 	}, []);
 
@@ -135,10 +141,15 @@ export const Help = () => {
 				/>
 				<button onClick={uploadImage}>Upload Image</button>
 			</div>
-			<div>
+			{/* <div>
 				{video.map((url) => {
 					return <video src={url} autoPlay />;
 				})}
+			</div> */}
+			<div className="app_videos">
+				{video.map((url) => (
+					<Video url={url} />
+				))}
 			</div>
 			{/* <div>
 				<input type="file" onChange={handleChange} accept="/image/*" />
