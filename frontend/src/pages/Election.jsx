@@ -1,30 +1,46 @@
-import React, { useContext, useState, useEffect } from "react";
-import Navbar from "../components/Navbar";
-import { VotingContext } from "../context";
-import Modal from "react-modal";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import React, { useContext, useState, useEffect } from 'react';
+import Navbar from '../components/Navbar';
+import { VotingContext } from '../context';
+import Modal from 'react-modal';
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 const Election = () => {
   const { account, setTheAccount, connectingWithContract } =
     useContext(VotingContext);
   const [allCandidates, setAllCandidates] = useState([]);
   const [voters, setVoters] = useState([]);
   const [electionDetails, setElectionDetails] = useState([]);
-  const [panNumber, setPanNumber] = useState("");
-  const [candidate, setCandidate] = useState("");
+  const [panNumber, setPanNumber] = useState('');
+  const [candidate, setCandidate] = useState('');
   const [checked, setChecked] = useState(false);
   const [modal, setModal] = useState(false);
   const [canVote, setCanVote] = useState(false);
   const [id, setId] = useState();
+  const [number, setNumber] = useState('');
+
   useEffect(() => {
     getElectionDetails();
     // getVotes();
   }, []);
+
+  const verifynumber = () => {
+    const article = {
+      otp: `${Math.floor(100000 + Math.random() * 900000)}`,
+    };
+    console.log(number);
+    axios
+      .post('http://localhost:3001/verification', article)
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
+
   const getElectionDetails = async () => {
     setTheAccount();
     const url = window.location.href;
-    const urlArray = url.split("/");
+    const urlArray = url.split('/');
     const unique_id = urlArray[urlArray.length - 1];
     setId(unique_id);
     const contract = await connectingWithContract();
@@ -42,7 +58,7 @@ const Election = () => {
 
   const voteKaro = async () => {
     const url = window.location.href;
-    const urlArray = url.split("/");
+    const urlArray = url.split('/');
     const unique_id = urlArray[urlArray.length - 1];
     try {
       const contract = await connectingWithContract();
@@ -54,42 +70,42 @@ const Election = () => {
       console.log(response);
     } catch (e) {
       console.log(e);
-      toast.error("You have already voted", {
-        position: "top-right",
+      toast.error('You have already voted', {
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: 'light',
       });
     }
   };
 
   const verifyPan = async () => {
     if (!voters.includes(panNumber)) {
-      console.log("Not Authorized");
-      toast.error("Not Authorized to vote", {
-        position: "top-right",
+      console.log('Not Authorized');
+      toast.error('Not Authorized to vote', {
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: 'light',
       });
       return;
     }
     console.log(panNumber);
     const options = {
-      method: "POST",
-      url: "https://pan-card-verification1.p.rapidapi.com/v3/tasks/sync/verify_with_source/ind_pan",
+      method: 'POST',
+      url: 'https://pan-card-verification1.p.rapidapi.com/v3/tasks/sync/verify_with_source/ind_pan',
       headers: {
-        "content-type": "application/json",
-        "X-RapidAPI-Key": "aeeaf0c4ffmsh8d2e448618a749cp1497acjsnf52c97a559d3",
-        "X-RapidAPI-Host": "pan-card-verification1.p.rapidapi.com",
+        'content-type': 'application/json',
+        'X-RapidAPI-Key': 'aeeaf0c4ffmsh8d2e448618a749cp1497acjsnf52c97a559d3',
+        'X-RapidAPI-Host': 'pan-card-verification1.p.rapidapi.com',
       },
       data: `{"task_id":"74f4c926-250c-43ca-9c53-453e87ceacd1","group_id":"8e16424a-58fc-4ba4-ab20-5bc8e7c3c41e","data":{"id_number":"${panNumber}"}}`,
     };
@@ -99,28 +115,28 @@ const Election = () => {
       .then(function (response) {
         console.log(response.data);
         setCanVote(true);
-        toast.success("Pan number verified", {
-          position: "top-right",
+        toast.success('Pan number verified', {
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: 'light',
         });
       })
       .catch(function (error) {
         console.error(error);
-        toast.error("Pan number not verified", {
-          position: "top-right",
+        toast.error('Pan number not verified', {
+          position: 'top-right',
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: 'light',
         });
       });
   };
@@ -134,8 +150,7 @@ const Election = () => {
           <h1 className="text-3xl font-bold text-black">Voting panel</h1>
           <Link
             to={`/results/${id}`}
-            className="text-white bg-[#015FC7] p-2 mt-8"
-          >
+            className="text-white bg-[#015FC7] p-2 mt-8">
             View Results
           </Link>
         </div>
@@ -143,29 +158,34 @@ const Election = () => {
         <h1 className="text-2xl font-semibold">{electionDetails.systemName}</h1>
         <div className="flex flex-row justify-between">
           <h1 className="text-black">
-            Number of Candidates:{" "}
+            Number of Candidates:{' '}
+            {parseInt(electionDetails.numberOfCandidates?._hex)}
           </h1>
           <h1 className="text-black">
             Election Held By: {electionDetails.electionHelderName}
           </h1>
           <h1 className="text-black">
-            Time Till:{" "}
+            Time Till:{' '}
             {new Date(
               parseInt(electionDetails?.votingPeriod?._hex) * 1000
             ).getDate() +
-              "-" +
+              '-' +
               parseInt(
                 new Date(
                   parseInt(electionDetails?.votingPeriod?._hex) * 1000
                 ).getUTCMonth() + 1
               ) +
-              "-" +
+              '-' +
               new Date(
                 parseInt(electionDetails?.votingPeriod?._hex) * 1000
               ).getFullYear()}
           </h1>
         </div>
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+          }}>
           <input
             placeholder="Enter PAN number"
             value={panNumber}
@@ -174,6 +194,14 @@ const Election = () => {
             }}
           />
           <button onClick={() => verifyPan()}>Verify Pan</button>
+          <input
+            placeholder="Enter  number"
+            value={number}
+            onChange={(e) => {
+              setNumber(e.target.value);
+            }}
+          />
+          <button onClick={() => verifynumber()}>Verify number</button>
         </div>
         {electionDetails?.length > 0 ? (
           allCandidates.map((c) => {
@@ -218,19 +246,17 @@ const Election = () => {
         </div>
         <button
           className={`${
-            checked && canVote ? "bg-blue-500" : "bg-gray-500"
+            checked && canVote ? 'bg-blue-500' : 'bg-gray-500'
           } text-white px-4 py-2 rounded`}
           disabled={!(checked && canVote)}
-          onClick={() => setModal(true)}
-        >
+          onClick={() => setModal(true)}>
           Vote
         </button>
         <Modal
           isOpen={modal}
           onRequestClose={() => setModal(false)}
           shouldCloseOnOverlayClick={false}
-          className="w-screen h-screen flex items-center justify-center"
-        >
+          className="w-screen h-screen flex items-center justify-center">
           <div className="w-1/3 h-1/3 m-auto bg-white rounded border flex flex-col items-center justify-center">
             <h1 className="text-2xl font-semibold">Are you sure?</h1>
             <div className="flex gap-4 mt-4">
@@ -239,14 +265,12 @@ const Election = () => {
                 onClick={() => {
                   voteKaro();
                   setModal(false);
-                }}
-              >
+                }}>
                 Yes
               </button>
               <button
                 className="bg-red-500 text-white px-4 py-2 rounded"
-                onClick={() => setModal(false)}
-              >
+                onClick={() => setModal(false)}>
                 No
               </button>
             </div>
@@ -255,8 +279,8 @@ const Election = () => {
       </div>
     </div>
   );
-  {
-    /* const voteKaro = async () => {
+  // {
+  /* const voteKaro = async () => {
     if (!voters.includes(panNumber)) {
       console.log("Not Authorized");
       toast.error("Not Authorized to vote", {
@@ -341,7 +365,7 @@ const Election = () => {
         )}
       </div>
     </div> */
-  }
+  // }
 };
 
 export default Election;

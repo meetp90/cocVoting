@@ -2,42 +2,58 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
+import { Loader } from 'rsuite';
+
 const News = () => {
   // const API_KEY = 'b9c28cb9bdb8481fa9f0b0143a122755';
   // const query = 'Elections';
-  const api_url = `https://saurav.tech/NewsAPI/top-headlines/category/business/in.json`;
+  //const api_url = `https://saurav.tech/NewsAPI/top-headlines/category/business/in.json`;
   const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
+    const fetchNews = async () => {
+      console.log('ho');
+      const response = await axios.get(
+        'https://saurav.tech/NewsAPI/top-headlines/category/business/in.json'
+      );
+      console.log('ho');
+      console.log(response.data);
+      setNews(response.data.articles.slice(0, 15));
+      setLoading(false);
+    };
+
     fetchNews();
   }, []);
-
-  const fetchNews = async () => {
-    console.log('ho');
-    const response = await axios.get(api_url);
-    console.log('ho');
-    console.log(response.data);
-    setNews(response.data.articles.slice(0, 10));
-  };
 
   return (
     <div className="bg-[#121113]">
       <Navbar />
-      <h1 className="px-8 py-4 text-4xl font-bold">News</h1>
-      <div className="px-8 flex flex-row flex-wrap items-center justify-center">
-        {news?.map((n) => (
-          <a href={n.url} target="_blank">
-            <div className="shadow shadow-gray-900  rounded-lg w-[600px] mt-8 mr-8">
-              <img
-                alt="News"
-                className="w-[600px] rounded-lg"
-                src={n.urlToImage}
-              />
-              <h1 className="text-white text-2xl font-bold p-4">{n.title}</h1>
-              <h2 className="text-white p-4">{n.content}</h2>
-            </div>
-          </a>
-        ))}
-      </div>
+      {loading ? (
+        <>
+          <Loader />
+        </>
+      ) : (
+        <>
+          <h1 className="px-8 text-4xl font-bold">News</h1>
+          <div className="px-8 py-8 flex flex-row flex-wrap items-center justify-center">
+            {news?.map((n) => (
+              <a href={n.url} target="_blank">
+                <div className="shadow shadow-gray-900  rounded-lg w-[600px] mt-8 mr-8">
+                  <img
+                    alt="News"
+                    className="w-[600px] rounded-lg"
+                    src={n.urlToImage}
+                  />
+                  <h1 className="text-white text-2xl font-bold p-4">
+                    {n.title}
+                  </h1>
+                  <h2 className="text-white p-4">{n.content}</h2>
+                </div>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
