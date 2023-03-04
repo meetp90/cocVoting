@@ -1,6 +1,10 @@
 const express = require('express');
 
 //SK259a2b9ba25c64a08bb566263f0d9a1d AC7dbc21f5f1e0aa138f3f3a558b958683
+// const accountSid = 'AC7dbc21f5f1e0aa138f3f3a558b958683';
+// const authToken = '4741283bad7dc78ea46cca972dd00f77';
+// const client = require('twilio')(accountSid, authToken);
+
 const accountSid = 'AC7dbc21f5f1e0aa138f3f3a558b958683';
 const authToken = '4741283bad7dc78ea46cca972dd00f77';
 const client = require('twilio')(accountSid, authToken);
@@ -25,7 +29,7 @@ app.post('/verification', (req, res) => {
     const otp = req.body.otp;
     console.log('balle balle', otp);
     sendtext();
-    res.status(200).json(otp);
+    // res.status(200).json(otp);
   } catch (err) {
     console.log(err);
   }
@@ -38,9 +42,9 @@ app.listen(port, () => {
 function sendtext() {
   client.messages
     .create({
+      body: 'hi',
       from: '+15676777560',
       to: '+919969140208',
-      body: 'otp',
     })
     .then((message) => console.log(message.sid))
     .done();
