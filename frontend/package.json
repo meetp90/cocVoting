@@ -10,6 +10,7 @@
     "chart.js": "^4.2.0",
     "ethers": "^5.7.2",
     "firebase": "^9.17.2",
+    "kickbox": "^2.0.4",
     "react": "^18.2.0",
     "react-bar-chart": "^0.1.2",
     "react-chartjs-2": "^5.2.0",
