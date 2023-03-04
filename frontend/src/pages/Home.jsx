@@ -2,7 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { VotingContext } from "../context";
-import homeImage from "../assets/home.svg";
+import homeImage from "../assets/voting.svg";
+
 import axios from "axios";
 const Home = () => {
   const { account, setTheAccount } = useContext(VotingContext);
@@ -35,7 +36,7 @@ const Home = () => {
       <Navbar />
       <div className="flex flex-row items-center">
         <div>
-          <img className="w-[60vw]" src={homeImage} />
+          <img className="w-[60vw]" src={homeImage} alt ="" />
         </div>
         <div className="flex items-center justify-center w-full">
           {account.length > 0 ? (
@@ -43,7 +44,7 @@ const Home = () => {
               <h1 className="text-white text-3xl font-semibold mt-4">
                 Be a part of the Decision
               </h1>
-              <h1 className="text-[#015FC7] text-5xl font-bold mt-4">
+              <h1 className="text-[#00e78d] text-5xl font-bold mt-4">
                 Vote Today
               </h1>
               <div className="flex flex-row justify-evenly">
