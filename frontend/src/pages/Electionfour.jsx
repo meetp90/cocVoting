@@ -42,29 +42,105 @@ function Electionfour() {
          />
          <button>Verify Pan</button>
        </div>
+       Preferance 1
        <div className="flex flex-col items-center">
                <div className="w-full grid grid-cols-12 px-6 py-4 bg-gray-50 border rounded">
-                 Candidate
-                 <h1 className="text-lg col-span-5 text-black"></h1>
+                 <h1 className="text-lg col-span-5 text-black">
+                    <div>
+                 <input
+                type="radio"
+                name=""
+                id=""
+              /> Candidate Name
+              </div>
+                 </h1>
+                 
+                 <h1 className="text-lg col-span-6 text-end text-black">
+                 </h1>
+               </div>
+               <div className="w-full grid grid-cols-12 px-6 py-4 bg-gray-50 border rounded">
+                 <h1 className="text-lg col-span-5 text-black">
+                    <div>
+                 <input
+                type="radio"
+                name=""
+                id=""
+              /> Candidate Name
+              </div>
+                 </h1>
+                 
+                 <h1 className="text-lg col-span-6 text-end text-black">
+                 </h1>
+               </div>
+               <div className="w-full grid grid-cols-12 px-6 py-4 bg-gray-50 border rounded">
+                 <h1 className="text-lg col-span-5 text-black">
+                    <div>
+                 <input
+                type="radio"
+                name=""
+                id=""
+              /> Candidate Name
+              </div>
+                 </h1>
+                 
                  <h1 className="text-lg col-span-6 text-end text-black">
                  </h1>
                </div>
        </div>
-       
+       Preferance 2
+       <div className="flex flex-col items-center">
+               <div className="w-full grid grid-cols-12 px-6 py-4 bg-gray-50 border rounded">
+                 <h1 className="text-lg col-span-5 text-black">
+                    <div>
+                 <input
+                type="radio"
+                name=""
+                id=""
+              /> Candidate Name
+              </div>
+                 </h1>
+                 
+                 <h1 className="text-lg col-span-6 text-end text-black">
+                 </h1>
+               </div>
+               <div className="w-full grid grid-cols-12 px-6 py-4 bg-gray-50 border rounded">
+                 <h1 className="text-lg col-span-5 text-black">
+                    <div>
+                 <input
+                type="radio"
+                name=""
+                id=""
+              /> Candidate Name
+              </div>
+                 </h1>
+                 
+                 <h1 className="text-lg col-span-6 text-end text-black">
+                 </h1>
+               </div>
+               <div className="w-full grid grid-cols-12 px-6 py-4 bg-gray-50 border rounded">
+                 <h1 className="text-lg col-span-5 text-black">
+                    <div>
+                 <input
+                type="radio"
+                name=""
+                id=""
+              /> Candidate Name
+              </div>
+                 </h1>
+                 
+                 <h1 className="text-lg col-span-6 text-end text-black">
+                 </h1>
+               </div>
+       </div>
        <div className="flex gap-4">
-       <input
-               type="checkbox"
-               name=""
-               id=""
-               value=""
-             />
+       
              <h1 className="text-black">
                I have selected as my candidate
              </h1>
 
              <h1 className="text-red-500 ">Please select a candidate</h1>
              </div>
-             <button>Vote</button>
+             <button className="bg-black text-white">Vote</button>
              </div>
    </div>
 
