@@ -19,9 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/elections" element={<Elections />} />
-        <Route path="/open-elections" element={<OpenElections />} />
         <Route path="/elections/:id" element={<Election />} />
-        <Route path="/requests" element={<Requests />} />
         <Route path="/requests/:id" element={<Request />} />
         <Route path="/results/:id" element={<Results />} />
         <Route path="/apply/:id" element={<Apply />} />
