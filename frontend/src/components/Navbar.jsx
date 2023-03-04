@@ -18,16 +18,6 @@ const Navbar = () => {
             Elections
           </h1>
         </Link>
-        <Link to="/open-elections">
-          <h1 className="text-gray-400 font-semibold hover:text-cyan-600">
-            Open Elections
-          </h1>
-        </Link>
-        <Link to="/requests">
-          <h1 className="text-gray-400 font-semibold hover:text-cyan-600">
-            Hosted
-          </h1>
-        </Link>
         <Link to="/contact">
           <h1 className="text-gray-400 font-semibold hover:text-cyan-600">
             Contact Us
