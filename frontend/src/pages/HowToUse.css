@@ -3,7 +3,7 @@
 }
 .etimetitle {
   text-align: center;
-  color: #81c6e8;
+  color: #00e78d;
 }
 /* body {
     background-color: #474e5d;
@@ -19,11 +19,11 @@
 }
 .timetitle {
   font-size: 27px;
-  color: #81c6e8;
+  color: #00e78d;
 }
 .timedate {
   font-size: 22px;
-  color: #81c6e8;
+  color: #00e78d;
 }
 
 /* The actual timeline (the vertical ruler) */
@@ -54,7 +54,7 @@
   height: 25px;
   right: -17px;
   background-color: black;
-  border: 4px solid #81c6e8;
+  border: 4px solid #00e78d;
   top: 15px;
   border-radius: 50%;
   z-index: 1;
@@ -81,7 +81,7 @@
   right: 30px;
   border: medium solid black;
   border-width: 10px 0 10px 10px;
-  border-color: transparent transparent transparent #81c6e8;
+  border-color: transparent transparent transparent #00e78d;
 }
 
 /* Add arrows to the right container (pointing left) */
@@ -95,7 +95,7 @@
   left: 30px;
   border: medium solid white;
   border-width: 10px 10px 10px 0;
-  border-color: transparent #81c6e8 transparent transparent;
+  border-color: transparent #00e78d transparent transparent;
 }
 
 /* Fix the circle for containers on the right side */

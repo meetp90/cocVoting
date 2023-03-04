@@ -1,26 +1,26 @@
-import React from "react";
-import Navbar from "../components/Navbar";
-import electionholder from "../assets/voting.svg";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
-import { useContext } from "react";
-import { VotingContext } from "../context";
+import React from 'react';
+import Navbar from '../components/Navbar';
+import electionholder from '../assets/voting.svg';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
+import { useContext } from 'react';
+import { VotingContext } from '../context';
 
 const AddElection = () => {
-  const { typeOfElection,setTypeOfElection } = useState("");
+  const { typeOfElection, setTypeOfElection } = useState('');
   const { setTheAccount, connectingWithContract } = useContext(VotingContext);
-  const [electionName, setElectionName] = useState("");
-  const [noOfCandidates, setNoOfCandidates] = useState("");
-  const [candidates, setCandidates] = useState("");
-  const [noOfDays, setNoOfDays] = useState("");
-  const [aadharNumbers, setAadharNumbers] = useState("");
-  const [name, setName] = useState("");
+  const [electionName, setElectionName] = useState('');
+  const [noOfCandidates, setNoOfCandidates] = useState('');
+  const [candidates, setCandidates] = useState('');
+  const [noOfDays, setNoOfDays] = useState('');
+  const [aadharNumbers, setAadharNumbers] = useState('');
+  const [name, setName] = useState('');
   const [id, setId] = useState(1);
   const generateUniqueId = async () => {
     const response = await axios.post(
-      "http://vismay9.pythonanywhere.com/election/",
+      'http://vismay9.pythonanywhere.com/election/',
 
       {
         election_name: electionName,
@@ -28,34 +28,34 @@ const AddElection = () => {
     );
     if (response.data.id >= 1) {
       setId(response.data.id);
-      toast.success("Unique ID generated", {
-        position: "top-right",
+      toast.success('Unique ID generated', {
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: 'light',
       });
     } else {
-      toast.error("Not able to generate an unique id", {
-        position: "top-right",
+      toast.error('Not able to generate an unique id', {
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: 'light',
       });
     }
   };
   const addAnElection = async () => {
     setTheAccount();
     const contract = await connectingWithContract();
-    const allCandidates = candidates.split(",");
-    const aadhars = aadharNumbers.split(",");
+    const allCandidates = candidates.split(',');
+    const aadhars = aadharNumbers.split(',');
     const response = await contract.createSystem(
       id,
       electionName,
@@ -67,7 +67,7 @@ const AddElection = () => {
     );
     console.log(response);
   };
-  
+
   return (
     <div>
       <Navbar />
@@ -88,8 +88,7 @@ const AddElection = () => {
             />
             <button
               onClick={() => generateUniqueId()}
-              className="text-white bg-[#244663] p-2 ml-8"
-            >
+              className="text-white bg-[#244663] p-2 ml-8">
               Generate Unique ID
             </button>
           </div>
@@ -129,16 +128,29 @@ const AddElection = () => {
             onChange={(e) => setName(e.target.value)}
           />
           <div className="p-1 rounded mt-4 relative w-full">
-            <select placeholder="Choose election type" className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-indigo-600">
-                <option value={typeOfElection} onChange={(e) => setTypeOfElection(e.target.value)}>Approval Voting</option>
-                <option value={typeOfElection} onChange={(e) => setTypeOfElection(e.target.value)}>Ranked-Choice Voting</option>
-                <option value={typeOfElection} onChange={(e) => setTypeOfElection(e.target.value)}>Quadratic Voting</option>
+            <select
+              placeholder="Choose election type"
+              className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-indigo-600">
+              <option
+                value={typeOfElection}
+                onChange={(e) => setTypeOfElection(e.target.value)}>
+                Approval Voting
+              </option>
+              <option
+                value={typeOfElection}
+                onChange={(e) => setTypeOfElection(e.target.value)}>
+                Ranked-Choice Voting
+              </option>
+              <option
+                value={typeOfElection}
+                onChange={(e) => setTypeOfElection(e.target.value)}>
+                Quadratic Voting
+              </option>
             </select>
-        </div>
+          </div>
           <button
             onClick={() => addAnElection()}
-            className="text-white bg-[#244663] p-2 mt-8"
-          >
+            className="text-white bg-[#244663] p-2 mt-8">
             Add Election
           </button>
         </div>
