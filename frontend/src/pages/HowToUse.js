@@ -3,8 +3,7 @@ import "./HowToUse.css";
 import { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
-import { Button } from "@material-ui/core";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
+
 
 function HowToUse() {
 	let [vote, setVote] = useState(false);
