@@ -3,9 +3,43 @@ import { doc, onSnapshot, collection, query, where } from "firebase/firestore";
 import db from "./firebase";
 import { Video } from "./Video";
 import "./Help.css";
-
+import {
+	ref,
+	uploadBytesResumable,
+	getDownloadURL,
+	uploadBytes,
+	listAll,
+} from "firebase/storage";
+import { storage } from "./firebase";
+import { v4 } from "uuid";
 export const Help = () => {
 	const [reels, setReels] = useState([]);
+	const [file, setFile] = useState(null);
+	const videolistRef = ref(storage, "videos/");
+	const uploadImage = () => {
+		if (file == null) return;
+
+		const fileRef = ref(storage, `videos/${file.name + v4()}`);
+		uploadBytes(fileRef, file).then((snapshot) => {
+			getDownloadURL(snapshot.ref).then((url) => {
+				setvideoList((prev) => [...prev, url]);
+			});
+			// alert("Video Uploaded");
+		});
+	};
+
+	const [video, setvideoList] = useState([]);
+
+	useEffect(() => {
+		listAll(videolistRef).then((response) => {
+			response.items.forEach((item) => {
+				getDownloadURL(item).then((url) => {
+					setvideoList((prev) => [...prev, url]);
+				});
+			});
+		});
+	}, []);
+
 	useEffect(() => {
 		const q = query(collection(db, "reels"));
 		onSnapshot(q, (snapshot) =>
@@ -13,27 +47,104 @@ export const Help = () => {
 		);
 		console.log(reels);
 	}, []);
-	return (
-		<div className="trauma-card">
-			{/* <h1>Lets build A ig reels clone</h1> */}
-			<div style={{ margin: "20px", paddingTop: "20px" }}>
-				<h1 style={{ fontSize: "4em" }}>PTSD Measures</h1>
-				<p style={{ fontSize: "1.25em", maxWidth: "600px" }}>
-					If you're finding yourself in a tangle of anxious thoughts or
-					experiencing some of the physical symptoms associated with anxiety,
-					know that you're not alone—many of us are right there with you.
-					<br></br>
-					<br></br>
-					Studies have shown that anxiety reducing videos turn out to be useful
-					in order to cope better with stress or PTSD.
-				</p>
-			</div>
 
-			<div className="app_videos">
-				{reels.map(({ url }) => (
-					<Video url={url} />
-				))}
+	// const [file, setFile] = useState(""); // progress
+	// const [percent, setPercent] = useState(0); // Handle file upload event and update state
+	// function handleChange(event) {
+	// 	setFile(event.target.files[0]);
+	// }
+
+	// const handleUpload = () => {
+	// 	if (!file) {
+	// 		alert("Please upload an image first!");
+	// 	}
+
+	// 	const storageRef = ref(db, `/files/${file.name}`);
+	// 	const uploadTask = uploadBytesResumable(storageRef, file);
+
+	// 	uploadTask.on(
+	// 		"state_changed",
+	// 		(snapshot) => {
+	// 			const percent = Math.round(
+	// 				(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+	// 			);
+
+	// 			setPercent(percent);
+	// 		},
+	// 		(err) => console.log(err),
+	// 		() => {
+	// 			getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+	// 				console.log(url);
+	// 			});
+	// 		}
+	// 	);
+	// };
+
+	return (
+		<>
+			<div className="trauma-card">
+				{/* <h1>Lets build A ig reels clone</h1> */}
+				<div
+					style={{ margin: "20px", paddingTop: "20px", textAlign: "center" }}
+				>
+					<h1 style={{ fontSize: "4em" }}>hi</h1>
+				</div>
 			</div>
-		</div>
+			<div
+				style={{
+					display: "flex",
+					justifyContent: "space-evenly",
+					alignItems: "center",
+					flexDirection: "row",
+					maxWidth: "80%",
+					margin: "auto",
+				}}
+			>
+				<div style={{ maxWidth: "50%" }}>
+					<h2 style={{ fontSize: "3em" }}>
+						Deliver your message with{" "}
+						<span
+							style={{
+								fontSize: "1.5em",
+								fontWeight: "600",
+								color: "#00e78d ",
+							}}
+						>
+							POWER.
+						</span>{" "}
+						<br></br> Show your strengths and{" "}
+						<span
+							style={{ fontSize: "1em", fontWeight: "600", marginTop: "10px" }}
+						>
+							empower the future.
+						</span>
+					</h2>
+				</div>
+				<div className="app_videos">
+					{reels.map(({ url }) => (
+						<Video url={url} />
+					))}
+				</div>
+			</div>
+			<div>
+				<input
+					type="file"
+					onChange={(event) => {
+						setFile(event.target.files[0]);
+					}}
+				/>
+				<button onClick={uploadImage}>Upload Image</button>
+			</div>
+			<div>
+				{video.map((url) => {
+					return <video src={url} autoPlay />;
+				})}
+			</div>
+			{/* <div>
+				<input type="file" onChange={handleChange} accept="/image/*" />
+				<button onClick={handleUpload}>Upload to Firebase</button>
+				<p>{percent} "% done"</p>
+			</div> */}
+		</>
 	);
 };

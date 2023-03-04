@@ -1,16 +1,9 @@
-<<<<<<< HEAD
-import React from 'react';
-import './HowToUse.css';
-import { useState } from 'react';
-import Navbar from '../components/Navbar';
-=======
 import React from "react";
 import "./HowToUse.css";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 
->>>>>>> 64e4702e623e737a0381f506bff12f796df0510d
 
 function HowToUse() {
   let [vote, setVote] = useState(false);
