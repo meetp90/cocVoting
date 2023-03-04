@@ -22,8 +22,8 @@ const News = () => {
   return (
     <div className="bg-[#121113]">
       <Navbar />
-      <h1 className="px-8 text-4xl font-bold">News</h1>
-      <div className="px-8 py-8 flex flex-row flex-wrap items-center justify-center">
+      <h1 className="px-8 py-4 text-4xl font-bold">News</h1>
+      <div className="px-8 flex flex-row flex-wrap items-center justify-center">
         {news?.map((n) => (
           <a href={n.url} target="_blank">
             <div className="shadow shadow-gray-900  rounded-lg w-[600px] mt-8 mr-8">
