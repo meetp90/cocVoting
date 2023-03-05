@@ -24,6 +24,9 @@ const Election = () => {
   const [number, setNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [enteredOtp, setEnteredOtp] = useState('');
+  const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const [isPanVerified, setIsPanVerified] = useState(false);
+  const [showOTP, setShowOTP] = useState(false);
   
   const [elections1, setElections1] = useState([]);
   
