@@ -55,6 +55,7 @@ const Elections = () => {
     const response = await axios.get(
       "http://127.0.0.1:8000/openelection/"
     );
+    localStorage.setItem('election', JSON.stringify(response.data));
     console.log(response.data);
     setElections(response.data);
   };
