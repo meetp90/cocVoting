@@ -57,13 +57,10 @@ const Election = () => {
     console.log(elections1[id-1].election_type)
   };
 
-
-  
   
 
- 
   const handleVerifyOtp = () => {
-    if (otp == enteredOtp) {
+    if (otp === enteredOtp) {
       toast.success('OTP Verified!', {
         position: 'top-right',
         autoClose: 5000,

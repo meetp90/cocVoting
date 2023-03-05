@@ -22,7 +22,7 @@ const Navbar = () => {
         </Link>
         <Link to="/contact">
           <h1 className="text-gray-400 font-semibold hover:text-cyan-600">
-            Contact Us
+            Campaign
           </h1>
         </Link>
         <Link to="/how-to-use">
@@ -33,6 +33,11 @@ const Navbar = () => {
         <Link to="/news">
           <h1 className="text-gray-400 font-semibold hover:text-cyan-600">
             News
+          </h1>
+        </Link>
+        <Link to="/help">
+          <h1 className="text-gray-400 font-semibold hover:text-cyan-600">
+            Help
           </h1>
         </Link>
       </div>

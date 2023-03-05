@@ -14,28 +14,27 @@ import Request from "./pages/Request";
 import Apply from "./pages/Apply";
 import Electiontwo from "./pages/Electiontwo";
 import Electionthree from "./pages/Electionthree";
-import Electionfour from "./pages/Electionfour";
+import Electionfour from "./pages/Electionfour";import { HelpMe } from "./pages/HelpMe";
+
 function App() {
-  return (
-    <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/elections" element={<Elections />} />
-        <Route path="/elections/:id" element={<Election />} />
-        <Route path="/requests/:id" element={<Request />} />
-        <Route path="/results/:id" element={<Results />} />
-        <Route path="/apply/:id" element={<Apply />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/add-election" element={<AddElection />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/how-to-use" element={<HowToUse />} />
-        <Route path="/news" element={<News />} />
-        <Route path="/electiontwo" element={<Electiontwo />} />
-        <Route path="/electionthree" element={<Electionthree />} />
-        <Route path="/electionfour" element={<Electionfour />} />
-      </Routes>
-    </>
-  );
+	return (
+		<>
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/elections" element={<Elections />} />
+				<Route path="/elections/:id" element={<Election />} />
+				<Route path="/requests/:id" element={<Request />} />
+				<Route path="/results/:id" element={<Results />} />
+				<Route path="/apply/:id" element={<Apply />} />
+				<Route path="/history" element={<History />} />
+				<Route path="/add-election" element={<AddElection />} />
+				<Route path="/contact" element={<Contact />} />
+				<Route path="/how-to-use" element={<HowToUse />} />
+				<Route path="/news" element={<News />} />
+				<Route path="/help" element={<HelpMe />} />
+			</Routes>
+		</>
+	);
 }
 
 export default App;
