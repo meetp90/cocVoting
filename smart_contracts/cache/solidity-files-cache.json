@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/meet/Documents/projects/cocvoting/Voting-Dapp/smart_contracts/contracts/Voting.sol": {
-      "lastModificationDate": 1677911366830,
-      "contentHash": "f53a697ab91de78edeb247303e3660a9",
+      "lastModificationDate": 1677963386096,
+      "contentHash": "3ca68cb3f501f9b68dc7789eeac14b61",
       "sourceName": "contracts/Voting.sol",
       "solcConfig": {
         "version": "0.8.17",

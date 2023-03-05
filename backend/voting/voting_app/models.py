@@ -12,6 +12,7 @@ def pan_validator(value):
 # Create your models here.
 class OpenElection(models.Model):
     election_name = models.CharField(max_length=255)
+    election_type=models.CharField(max_length=255)
 
 class ClosedElection(models.Model):
     election_name = models.CharField(max_length=255)

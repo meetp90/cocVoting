@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { VotingContext } from "../context";
 import homeImage from "../assets/homevoting.svg";
+import Card from "./Card";
 import homebg from "../assets/home-bg.jpg";
 import axios from "axios";
 const Home = () => {
@@ -56,16 +57,16 @@ const Home = () => {
                     localStorage.setItem("status", "helder");
                   }}
                   to="/add-election"
-                  className="text-black bg-[#ffffff] font-bold p-2 mt-4 w-[180px] text-center rounded-lg"
+                  className="text-black bg-[#ffffff] hover:bg-[#6bcadb] font-bold p-2 mt-4 w-[180px] text-center rounded-lg"
                 >
-                  <h1 className="text-black font-bold">Hold an Election</h1>
+                  <h1 className="text-black font-bold ">Hold an Election</h1>
                 </Link>
                 <Link
                   onClick={() => {
                     localStorage.setItem("status", "voter");
                   }}
                   to="/elections"
-                  className="text-black bg-[#ffffff] font-bold p-2 mt-4 w-[180px] text-center rounded-lg"
+                  className="text-black hover:bg-[#6bcadb] bg-[#ffffff] font-bold p-2 mt-4 w-[180px] text-center rounded-lg"
                 >
                   Vote
                 </Link>
@@ -84,50 +85,12 @@ const Home = () => {
                 onClick={() => {
                   setTheAccount();
                 }}
-                className="text-black bg-[#ffffff] p-2 mt-4"
+                className="text-black rounded-lg border-solid border-4 border-[#6bcadb] drop-shadow-md hover:bg-[#6bcadb] bg-[#F5F5F5] p-2 mt-4"
               >
                 Connect Wallet
               </button>
             </div>
           )}
-        </div>
-      </div>
-      <div className="flex w-full px-36 py-24 bg-white">
-        <h1 className="text-5xl font-semibold -rotate-90 text-black">
-          Features
-        </h1>
-        <div className="border-l-4 border-blue-700 ml-[-160px] flex flex-col gap-4 pl-12">
-          <h1 className="text-xl font-semibold text-black">
-            Secured by 256 bit encryption
-          </h1>
-          <h1 className="text-xl font-semibold text-black">
-            Backed by ethereum based technology
-          </h1>
-          <h1 className="text-xl font-semibold text-black">
-            Verifiable transactions
-          </h1>
-          <h1 className="text-xl font-semibold text-black">Easy to use</h1>
-          <h1 className="text-xl font-semibold text-black ">
-            Cheaper than ballot voting system
-          </h1>
-          <h1 className="text-xl font-semibold text-black">
-            Faster voting process
-          </h1>
-        </div>
-      </div>
-      <div className="flex w-full px-36 py-24 text-white">
-        <h1 className="text-5xl font-semibold -rotate-90">About</h1>
-        <div className="border-l-4 border-blue-700 ml-[-80px] flex flex-col gap-4 pl-12">
-          <h1 className="text-xl font-semibold w-3/4">
-            An online voting system that will replace the old ballot sytem or
-            paper system. Over the time we have utilized the required technology
-            in every sector to improve efficiency and save the extra resources.
-            But the voting system is still very expensive and requires a bigger
-            workforce. The system is slower and still not completely tamper
-            proof. We bring the system that is safe, reliable and solve the
-            modern issues like higher reachability of the booth, crowd free
-            voting, inexpensive, faster results and others.
-          </h1>
         </div>
       </div>
       <div className="w-full px-36 py-24 bg-white">
@@ -150,6 +113,7 @@ const Home = () => {
           </h1>
         </div>
       </div>
+      <Card />
     </div>
   );
 };

@@ -9,7 +9,12 @@ import { useContext } from 'react';
 import { VotingContext } from '../context';
 
 const AddElection = () => {
-  const { typeOfElection, setTypeOfElection } = useState('');
+  const getInitialState = () => {
+    const value = "SimpleVoting";
+    return value;
+  };
+
+  const [value, setValue] = useState(getInitialState);
   const { setTheAccount, connectingWithContract } = useContext(VotingContext);
   const [electionName, setElectionName] = useState('');
   const [noOfCandidates, setNoOfCandidates] = useState('');
@@ -24,6 +29,7 @@ const AddElection = () => {
 
       {
         election_name: electionName,
+        election_type:value,
       }
     );
     if (response.data.id >= 1) {
@@ -52,6 +58,8 @@ const AddElection = () => {
     }
   };
   const addAnElection = async () => {
+    console.log(value);
+    localStorage.setItem('typeOfElection', value);
     setTheAccount();
     const contract = await connectingWithContract();
     const allCandidates = candidates.split(',');
@@ -66,6 +74,9 @@ const AddElection = () => {
       name
     );
     console.log(response);
+  };
+  const handleChange = (e) => {
+    setValue(e.target.value);
   };
 
   return (
@@ -130,20 +141,20 @@ const AddElection = () => {
           <div className="p-1 rounded mt-4 relative w-full">
             <select
               placeholder="Choose election type"
+              value={value} onChange={handleChange}
               className="w-full p-2.5 text-gray-500 bg-white border rounded-md shadow-sm outline-none appearance-none focus:border-indigo-600">
-              <option
-                value={typeOfElection}
-                onChange={(e) => setTypeOfElection(e.target.value)}>
+              <option value="ApprovalVoting">
                 Approval Voting
               </option>
+              <option value="SimpleVoting">
+                Simple Voting
+              </option>
               <option
-                value={typeOfElection}
-                onChange={(e) => setTypeOfElection(e.target.value)}>
+                value="RankchoiceVoting">
                 Ranked-Choice Voting
               </option>
               <option
-                value={typeOfElection}
-                onChange={(e) => setTypeOfElection(e.target.value)}>
+                value="QuadraticVoting">
                 Quadratic Voting
               </option>
             </select>

@@ -12,7 +12,9 @@ import OpenElections from "./pages/OpenElections";
 import Requests from "./pages/Requests";
 import Request from "./pages/Request";
 import Apply from "./pages/Apply";
-import { HelpMe } from "./pages/HelpMe";
+import Electiontwo from "./pages/Electiontwo";
+import Electionthree from "./pages/Electionthree";
+import Electionfour from "./pages/Electionfour";import { HelpMe } from "./pages/HelpMe";
 
 function App() {
 	return (

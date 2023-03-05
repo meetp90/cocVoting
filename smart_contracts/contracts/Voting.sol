@@ -73,4 +73,33 @@ contract Voting{
         payable(msg.sender).transfer(1 ether);
     }
 
+    function voteKarteRahoMultiple(uint _uniqueId,string memory _candidateName,string memory _candidateAadhar, uint _count) public  {
+        voteKaroMultiple(_uniqueId,_candidateName,_candidateAadhar,_count);
+    }
+
+    function voteKaroMultiple(uint _uniqueId,string memory _candidateName,string memory _candidateAadhar, uint _count) internal {
+        require(checkIfUserExists(_uniqueId, _candidateAadhar),"You are not Authorized to Vote");
+        require(differentSystemVotingDone[_uniqueId][msg.sender]==false,"You have already Voted");
+        require(differentPanCardsVoting[_uniqueId][_candidateAadhar]==false,"You have already Voted");
+        require(systems[_uniqueId].votingPeriod >= block.timestamp, "The voting time is Over!");
+        differentSystemVotes[_uniqueId][_candidateName] += _count;
+        differentSystemVotingDone[_uniqueId][msg.sender] = true;
+        differentPanCardsVoting[_uniqueId][_candidateAadhar]=true;
+    }
+
+    function voteKarteRahoApproval(uint _uniqueId,string[] memory _candidateName,string memory _candidateAadhar) public  {
+        voteKaroApproval(_uniqueId,_candidateName,_candidateAadhar);
+    }
+
+    function voteKaroApproval(uint _uniqueId, string[] memory _candidateName,string memory _candidateAadhar) internal {
+        require(checkIfUserExists(_uniqueId, _candidateAadhar),"You are not Authorized to Vote");
+        require(differentSystemVotingDone[_uniqueId][msg.sender]==false,"You have already Voted");
+        require(differentPanCardsVoting[_uniqueId][_candidateAadhar]==false,"You have already Voted");
+        require(systems[_uniqueId].votingPeriod >= block.timestamp, "The voting time is Over!");
+        for(uint i=0;i<_candidateName.length;i++){
+            differentSystemVotes[_uniqueId][_candidateName[i]] +=1;
+        }
+        differentSystemVotingDone[_uniqueId][msg.sender] = true;
+        differentPanCardsVoting[_uniqueId][_candidateAadhar]=true;
+    }
 }
