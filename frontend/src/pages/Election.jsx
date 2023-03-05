@@ -11,7 +11,7 @@ const Election = () => {
   const { account, setTheAccount, connectingWithContract } =
     useContext(VotingContext);
   useEffect(() => {
-    fetchElections();
+    getElectionDetails();
   }, []);
 
   const [allCandidates, setAllCandidates] = useState([]);
@@ -55,17 +55,15 @@ const Election = () => {
     setElectionDetails(response);
     console.log(parseInt(response.numberOfCandidates._hex));
     console.log();
-    console.log(elections1[id - 1].election_type);
   };
 
   useEffect(() => {
-    fetchElections();
     getElectionDetails();
     // getVotes();
   }, []);
 
   const handleVerifyOtp = () => {
-    if (otp === enteredOtp) {
+    if (otp == enteredOtp) {
       toast.success('OTP Verified!', {
         position: 'top-right',
         autoClose: 5000,
@@ -222,223 +220,220 @@ const Election = () => {
     <div>
       <Navbar />
       <ToastContainer />
-      {elections1[id].election_type == 'SimpleVoting' ? (
-        <>
-          <div className="w-full px-36 py-16 flex flex-col gap-6">
-            <div className="flex flex-row items-center justify-between">
-              <h1 className="text-3xl font-bold text-black">Voting panel</h1>
-              <Link
-                to={`/results/${id}`}
-                className="text-white bg-[#015FC7] p-2 mt-8">
-                View Results
-              </Link>
-            </div>
 
-            <h1 className="text-2xl font-semibold">
-              {electionDetails.systemName}
+      <>
+        <div className="w-full px-36 py-16 flex flex-col gap-6">
+          <div className="flex flex-row items-center justify-between">
+            <h1 className="text-3xl font-bold text-black">Voting panel</h1>
+            <Link
+              to={`/results/${id}`}
+              className="text-white bg-[#015FC7] p-2 mt-8">
+              View Results
+            </Link>
+          </div>
+
+          <h1 className="text-2xl font-semibold">
+            {electionDetails.systemName}
+          </h1>
+          <div className="flex flex-row justify-between">
+            <h1 className="text-black">
+              Number of Candidates:{' '}
+              {parseInt(electionDetails.numberOfCandidates?._hex)}
             </h1>
-            <div className="flex flex-row justify-between">
-              <h1 className="text-black">
-                Number of Candidates:{' '}
-                {parseInt(electionDetails.numberOfCandidates?._hex)}
-              </h1>
-              <h1 className="text-black">
-                Election Held By: {electionDetails.electionHelderName}
-              </h1>
-              <h1 className="text-black">
-                Time Till:{' '}
-                {new Date(
-                  parseInt(electionDetails?.votingPeriod?._hex) * 1000
-                ).getDate() +
-                  '-' +
-                  parseInt(
-                    new Date(
-                      parseInt(electionDetails?.votingPeriod?._hex) * 1000
-                    ).getUTCMonth() + 1
-                  ) +
-                  '-' +
+            <h1 className="text-black">
+              Election Held By: {electionDetails.electionHelderName}
+            </h1>
+            <h1 className="text-black">
+              Time Till:{' '}
+              {new Date(
+                parseInt(electionDetails?.votingPeriod?._hex) * 1000
+              ).getDate() +
+                '-' +
+                parseInt(
                   new Date(
                     parseInt(electionDetails?.votingPeriod?._hex) * 1000
-                  ).getFullYear()}
-              </h1>
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-              }}>
-              <div style={{ marginBottom: '30px' }} className="pan_container">
-                <input
-                  placeholder="Enter PAN number"
-                  value={panNumber}
-                  style={{
-                    borderRadius: '5px',
-                    border: '1px solid teal',
-                    padding: '0.5em 0.5em 0.5em',
-                  }}
-                  onChange={(e) => {
-                    setPanNumber(e.target.value);
-                  }}
-                />
-                <button
-                  style={{
-                    marginLeft: '20px',
-                    background: 'teal',
-                    padding: '0.5em 0.5em 0.5em',
-                    color: 'white',
-                    borderRadius: '5px',
-                  }}
-                  onClick={() => verifyPan()}>
-                  Verify Pan
-                </button>
-              </div>
-
-              <div className="phone_container">
-                <input
-                  placeholder="Enter number"
-                  value={number}
-                  onChange={(e) => {
-                    setNumber(e.target.value);
-                  }}
-                  style={{
-                    borderRadius: '5px',
-                    border: '1px solid teal',
-                    padding: '0.5em 0.5em 0.5em',
-                  }}
-                />
-                <button
-                  onClick={() => {
-                    verifynumber();
-                  }}
-                  style={{
-                    marginLeft: '20px',
-                    background: 'teal',
-                    padding: '0.5em 0.5em 0.5em',
-                    color: 'white',
-                    borderRadius: '5px',
-                  }}>
-                  Verify number
-                </button>
-              </div>
-              {showOTP ? (
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    background: '#D3D3D3',
-                    padding: '1em',
-                    width: '35%',
-                    marginTop: '20px',
-                    borderRadius: '5px',
-                  }}
-                  className="otp_verify">
-                  <OTPInput
-                    value={enteredOtp}
-                    onChange={setEnteredOtp}
-                    autoFocus
-                    OTPLength={6}
-                    otpType="number"
-                    disabled={false}
-                    placeholder={1}
-                    inputStyle={{
-                      border: '1px solid teal',
-                      borderRadius: '5px',
-                      padding: '0.5em 0.5em 0.5em',
-                    }}
-                  />
-                  <button
-                    style={{
-                      background: 'teal',
-                      padding: '0.5em 0.5em 0.5em',
-                      color: 'white',
-                      borderRadius: '5px',
-                    }}
-                    onClick={handleVerifyOtp}>
-                    check
-                  </button>
-                </div>
-              ) : null}
-            </div>
-            {electionDetails?.length > 0 ? (
-              allCandidates.map((c) => {
-                return (
-                  <div className="flex flex-col items-center">
-                    <div className="w-full grid grid-cols-12 px-6 py-4 bg-gray-50 border rounded">
-                      <input
-                        className="cols-span-1"
-                        type="radio"
-                        name="candidate"
-                        id=""
-                        checked={candidate === c}
-                        onChange={() => setCandidate(c)}
-                      />
-                      <h1 className="text-lg col-span-5 text-black">{c}</h1>
-                      <h1 className="text-lg col-span-6 text-end"></h1>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <h1>Loading</h1>
-            )}
-
-            <div className="flex gap-4">
-              {candidate ? (
-                <>
-                  <input
-                    type="checkbox"
-                    name=""
-                    id=""
-                    checked={checked}
-                    onClick={() => setChecked((prev) => !prev)}
-                  />
-                  <h1 className="text-black">
-                    I have selected {candidate} as my candidate
-                  </h1>
-                </>
-              ) : (
-                <h1 className="text-red-500 ">Please select a candidate</h1>
-              )}
-            </div>
-            <button
-              className={`${
-                isPhoneVerified && isPanVerified && canVote
-                  ? 'bg-blue-500'
-                  : 'bg-gray-500'
-              } text-white px-4 py-2 rounded`}
-              disabled={!(isPhoneVerified && isPanVerified && canVote)}
-              onClick={() => setModal(true)}>
-              Vote
-            </button>
-            <Modal
-              isOpen={modal}
-              onRequestClose={() => setModal(false)}
-              shouldCloseOnOverlayClick={false}
-              className="w-screen h-screen flex items-center justify-center">
-              <div className="w-1/3 h-1/3 m-auto bg-white rounded border flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-semibold">Are you sure?</h1>
-                <div className="flex gap-4 mt-4">
-                  <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded"
-                    onClick={() => {
-                      voteKaro();
-                      setModal(false);
-                    }}>
-                    Yes
-                  </button>
-                  <button
-                    className="bg-red-500 text-white px-4 py-2 rounded"
-                    onClick={() => setModal(false)}>
-                    No
-                  </button>
-                </div>
-              </div>
-            </Modal>
+                  ).getUTCMonth() + 1
+                ) +
+                '-' +
+                new Date(
+                  parseInt(electionDetails?.votingPeriod?._hex) * 1000
+                ).getFullYear()}
+            </h1>
           </div>
-        </>
-      ) : (
-        <>heeelloooo</>
-      )}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
+            <div style={{ marginBottom: '30px' }} className="pan_container">
+              <input
+                placeholder="Enter PAN number"
+                value={panNumber}
+                style={{
+                  borderRadius: '5px',
+                  border: '1px solid teal',
+                  padding: '0.5em 0.5em 0.5em',
+                }}
+                onChange={(e) => {
+                  setPanNumber(e.target.value);
+                }}
+              />
+              <button
+                style={{
+                  marginLeft: '20px',
+                  background: 'teal',
+                  padding: '0.5em 0.5em 0.5em',
+                  color: 'white',
+                  borderRadius: '5px',
+                }}
+                onClick={() => verifyPan()}>
+                Verify Pan
+              </button>
+            </div>
+
+            <div className="phone_container">
+              <input
+                placeholder="Enter number"
+                value={number}
+                onChange={(e) => {
+                  setNumber(e.target.value);
+                }}
+                style={{
+                  borderRadius: '5px',
+                  border: '1px solid teal',
+                  padding: '0.5em 0.5em 0.5em',
+                }}
+              />
+              <button
+                onClick={() => {
+                  verifynumber();
+                }}
+                style={{
+                  marginLeft: '20px',
+                  background: 'teal',
+                  padding: '0.5em 0.5em 0.5em',
+                  color: 'white',
+                  borderRadius: '5px',
+                }}>
+                Verify number
+              </button>
+            </div>
+            {showOTP ? (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  background: '#D3D3D3',
+                  padding: '1em',
+                  width: '35%',
+                  marginTop: '20px',
+                  borderRadius: '5px',
+                }}
+                className="otp_verify">
+                <OTPInput
+                  value={enteredOtp}
+                  onChange={setEnteredOtp}
+                  autoFocus
+                  OTPLength={6}
+                  otpType="number"
+                  disabled={false}
+                  placeholder={1}
+                  inputStyle={{
+                    border: '1px solid teal',
+                    borderRadius: '5px',
+                    padding: '0.5em 0.5em 0.5em',
+                  }}
+                />
+                <button
+                  style={{
+                    background: 'teal',
+                    padding: '0.5em 0.5em 0.5em',
+                    color: 'white',
+                    borderRadius: '5px',
+                  }}
+                  onClick={handleVerifyOtp}>
+                  check
+                </button>
+              </div>
+            ) : null}
+          </div>
+          {electionDetails?.length > 0 ? (
+            allCandidates.map((c) => {
+              return (
+                <div className="flex flex-col items-center">
+                  <div className="w-full grid grid-cols-12 px-6 py-4 bg-gray-50 border rounded">
+                    <input
+                      className="cols-span-1"
+                      type="radio"
+                      name="candidate"
+                      id=""
+                      checked={candidate === c}
+                      onChange={() => setCandidate(c)}
+                    />
+                    <h1 className="text-lg col-span-5 text-black">{c}</h1>
+                    <h1 className="text-lg col-span-6 text-end"></h1>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <h1>Loading</h1>
+          )}
+
+          <div className="flex gap-4">
+            {candidate ? (
+              <>
+                <input
+                  type="checkbox"
+                  name=""
+                  id=""
+                  checked={checked}
+                  onClick={() => setChecked((prev) => !prev)}
+                />
+                <h1 className="text-black">
+                  I have selected {candidate} as my candidate
+                </h1>
+              </>
+            ) : (
+              <h1 className="text-red-500 ">Please select a candidate</h1>
+            )}
+          </div>
+          <button
+            className={`${
+              isPhoneVerified && isPanVerified && canVote
+                ? 'bg-blue-500'
+                : 'bg-gray-500'
+            } text-white px-4 py-2 rounded`}
+            disabled={!(isPhoneVerified && isPanVerified && canVote)}
+            onClick={() => setModal(true)}>
+            Vote
+          </button>
+          <Modal
+            isOpen={modal}
+            onRequestClose={() => setModal(false)}
+            shouldCloseOnOverlayClick={false}
+            className="w-screen h-screen flex items-center justify-center">
+            <div className="w-1/3 h-1/3 m-auto bg-white rounded border flex flex-col items-center justify-center">
+              <h1 className="text-2xl font-semibold">Are you sure?</h1>
+              <div className="flex gap-4 mt-4">
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded"
+                  onClick={() => {
+                    voteKaro();
+                    setModal(false);
+                  }}>
+                  Yes
+                </button>
+                <button
+                  className="bg-red-500 text-white px-4 py-2 rounded"
+                  onClick={() => setModal(false)}>
+                  No
+                </button>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      </>
     </div>
   );
   // {
