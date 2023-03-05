@@ -6,7 +6,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import OTPInput from 'otp-input-react';
+
 const Election = () => {
+  useEffect(() => {
+    fetchElections();
+  }, []);
   const { account, setTheAccount, connectingWithContract } = useContext(VotingContext);
   const [allCandidates, setAllCandidates] = useState([]);
   const [voters, setVoters] = useState([]);
@@ -20,15 +24,13 @@ const Election = () => {
   const [number, setNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [enteredOtp, setEnteredOtp] = useState('');
-  
   const [elections1, setElections1] = useState([]);
   
   const fetchElections = async () => {
-    const response = await axios.get(
-      "http://127.0.0.1:8000/openelection/"
-    );
-    console.log(response.data);
-    setElections1(response.data);
+    const response = JSON.parse(localStorage.getItem("election"))
+    console.log(response);
+    setElections1(response);
+    getElectionDetails();
   };
   const getElectionDetails = async () => {
     setTheAccount();
@@ -47,17 +49,9 @@ const Election = () => {
     setVoters(voters);
     setElectionDetails(response);
     console.log(parseInt(response.numberOfCandidates._hex));
+    console.log()
+    console.log(elections1[id-1].election_type)
   };
-
-  useEffect(() => {
-    
-    getElectionDetails();
-    fetchElections();
-    // getVotes();
-  }, []);
-
-  
-  
 
  
   const handleVerifyOtp = () => {
@@ -201,7 +195,7 @@ const Election = () => {
     <div>
       <Navbar />
       <ToastContainer />
-      {(elections1[id].election_type=="SimpleVoting")?
+      {( elections1[id-1].election_type == "SimpleVoting")?
        (<>
         <div className="w-full px-36 py-16 flex flex-col gap-6">
         <div className="flex flex-row items-center justify-between">
@@ -362,8 +356,7 @@ const Election = () => {
         </Modal>
       </div>
       </>): (<>heeelloooo</>)}
-
-
+   
 
      
     </div>
