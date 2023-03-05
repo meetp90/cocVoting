@@ -58,18 +58,16 @@ const Election = () => {
   };
 
   useEffect(() => {
-    
-    getElectionDetails();
     fetchElections();
+    getElectionDetails();
     // getVotes();
   }, []);
 
   
   
 
- 
   const handleVerifyOtp = () => {
-    if (otp == enteredOtp) {
+    if (otp === enteredOtp) {
       toast.success('OTP Verified!', {
         position: 'top-right',
         autoClose: 5000,
@@ -227,7 +225,7 @@ const Election = () => {
     <div>
       <Navbar />
       <ToastContainer />
-      {( elections1[id-1].election_type == "SimpleVoting")?
+      {(elections1[id].election_type==="SimpleVoting")?
        (<>
         <div className="w-full px-36 py-16 flex flex-col gap-6">
         <div className="flex flex-row items-center justify-between">
