@@ -1,5 +1,5 @@
-import React from "react";
-import "./Glass.css";
+import React from 'react';
+import './Glass.css';
 import VanillaTilt from "vanilla-tilt";
 // const element = document.querySelectorAll('.card');
 

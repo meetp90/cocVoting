@@ -94,7 +94,7 @@ function HowToUse() {
           }}>
           <span
             style={{
-              color: '#00e78d',
+              color: '#6bcadb',
             }}>
             I am{' '}
           </span>
