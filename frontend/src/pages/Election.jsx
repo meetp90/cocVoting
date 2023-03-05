@@ -24,6 +24,7 @@ const Election = () => {
   const [number, setNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [enteredOtp, setEnteredOtp] = useState('');
+  
   const [elections1, setElections1] = useState([]);
   
   const fetchElections = async () => {
@@ -53,6 +54,16 @@ const Election = () => {
     console.log(elections1[id-1].election_type)
   };
 
+  useEffect(() => {
+    
+    getElectionDetails();
+    fetchElections();
+    // getVotes();
+  }, []);
+
+  
+  
+
  
   const handleVerifyOtp = () => {
     if (otp == enteredOtp) {
@@ -66,6 +77,7 @@ const Election = () => {
         progress: undefined,
         theme: 'light',
       });
+      setIsPhoneVerified(true);
     } else {
       toast.error('OTP Did not Match', {
         position: 'top-right',
@@ -81,6 +93,20 @@ const Election = () => {
   };
 
   const verifynumber = () => {
+    if (!number) {
+      return toast.error('OTP Verified!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    }
+    setShowOTP(true);
+
     const otp_num = Math.floor(100000 + Math.random() * 900000);
     console.log(otp_num);
     setOtp(otp_num);
@@ -146,49 +172,52 @@ const Election = () => {
         progress: undefined,
         theme: 'light',
       });
-      return;
     }
-    console.log(panNumber);
-    const options = {
-      method: 'POST',
-      url: 'https://pan-card-verification1.p.rapidapi.com/v3/tasks/sync/verify_with_source/ind_pan',
-      headers: {
-        'content-type': 'application/json',
-        'X-RapidAPI-Key': 'aeeaf0c4ffmsh8d2e448618a749cp1497acjsnf52c97a559d3',
-        'X-RapidAPI-Host': 'pan-card-verification1.p.rapidapi.com',
-      },
-      data: `{"task_id":"74f4c926-250c-43ca-9c53-453e87ceacd1","group_id":"8e16424a-58fc-4ba4-ab20-5bc8e7c3c41e","data":{"id_number":"${panNumber}"}}`,
-    };
+    if (panNumber) {
+      console.log(panNumber);
+      const options = {
+        method: 'POST',
+        url: 'https://pan-card-verification1.p.rapidapi.com/v3/tasks/sync/verify_with_source/ind_pan',
+        headers: {
+          'content-type': 'application/json',
+          'X-RapidAPI-Key':
+            '20baf1fca8msha5de52bce1c53b5p147629jsn796ca2bbb868',
+          'X-RapidAPI-Host': 'pan-card-verification1.p.rapidapi.com',
+        },
+        data: `{"task_id":"74f4c926-250c-43ca-9c53-453e87ceacd1","group_id":"8e16424a-58fc-4ba4-ab20-5bc8e7c3c41e","data":{"id_number":"${panNumber}"}}`,
+      };
 
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log(response.data);
-        setCanVote(true);
-        toast.success('Pan number verified', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
+      axios
+        .request(options)
+        .then(function (response) {
+          console.log(response.data);
+          setCanVote(true);
+          setIsPanVerified(true);
+          toast.success('Pan number verified', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
+        })
+        .catch(function (error) {
+          console.error(error);
+          toast.error('Pan number not verified', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
         });
-      })
-      .catch(function (error) {
-        console.error(error);
-        toast.error('Pan number not verified', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
-      });
+    }
   };
 
   return (
@@ -238,48 +267,97 @@ const Election = () => {
             display: 'flex',
             flexDirection: 'column',
           }}>
-          <input
-            placeholder="Enter PAN number"
-            value={panNumber}
-            onChange={(e) => {
-              setPanNumber(e.target.value);
-            }}
-          />
-          <button onClick={() => verifyPan()}>Verify Pan</button>
-          <input
-            placeholder="Enter number"
-            value={number}
-            onChange={(e) => {
-              setNumber(e.target.value);
-            }}
-          />
-          <button
-            onClick={() => {
-              verifynumber();
-            }}>
-            Verify number
-          </button>
-
-          <div className="otp_verify">
-            <OTPInput
-              value={enteredOtp}
-              onChange={setEnteredOtp}
-              autoFocus
-              OTPLength={6}
-              otpType="number"
-              disabled={false}
-            />
-            {/* 
+          <div style={{ marginBottom: '30px' }} className="pan_container">
             <input
-              type="number"
-              value={enteredOtp}
-              onChange={(e) => {
-                console.log(e.target.value);
-                setEnteredOtp(e.target.value);
+              placeholder="Enter PAN number"
+              value={panNumber}
+              style={{
+                borderRadius: '5px',
+                border: '1px solid teal',
+                padding: '0.5em 0.5em 0.5em',
               }}
-            /> */}
-            <button onClick={handleVerifyOtp}>check</button>
+              onChange={(e) => {
+                setPanNumber(e.target.value);
+              }}
+            />
+            <button
+              style={{
+                marginLeft: '20px',
+                background: 'teal',
+                padding: '0.5em 0.5em 0.5em',
+                color: 'white',
+                borderRadius: '5px',
+              }}
+              onClick={() => verifyPan()}>
+              Verify Pan
+            </button>
           </div>
+
+          <div className="phone_container">
+            <input
+              placeholder="Enter number"
+              value={number}
+              onChange={(e) => {
+                setNumber(e.target.value);
+              }}
+              style={{
+                borderRadius: '5px',
+                border: '1px solid teal',
+                padding: '0.5em 0.5em 0.5em',
+              }}
+            />
+            <button
+              onClick={() => {
+                verifynumber();
+              }}
+              style={{
+                marginLeft: '20px',
+                background: 'teal',
+                padding: '0.5em 0.5em 0.5em',
+                color: 'white',
+                borderRadius: '5px',
+              }}>
+              Verify number
+            </button>
+          </div>
+          {showOTP ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                background: '#D3D3D3',
+                padding: '1em',
+                width: '35%',
+                marginTop: '20px',
+                borderRadius: '5px',
+              }}
+              className="otp_verify">
+              <OTPInput
+                value={enteredOtp}
+                onChange={setEnteredOtp}
+                autoFocus
+                OTPLength={6}
+                otpType="number"
+                disabled={false}
+                placeholder={1}
+                inputStyle={{
+                  border: '1px solid teal',
+                  borderRadius: '5px',
+                  padding: '0.5em 0.5em 0.5em',
+                }}
+              />
+              <button
+                style={{
+                  background: 'teal',
+                  padding: '0.5em 0.5em 0.5em',
+                  color: 'white',
+                  borderRadius: '5px',
+                }}
+                onClick={handleVerifyOtp}>
+                check
+              </button>
+            </div>
+          ) : null}
         </div>
         {electionDetails?.length > 0 ? (
           allCandidates.map((c) => {
@@ -324,9 +402,11 @@ const Election = () => {
         </div>
         <button
           className={`${
-            checked && canVote ? 'bg-blue-500' : 'bg-gray-500'
+            isPhoneVerified && isPanVerified && canVote
+              ? 'bg-blue-500'
+              : 'bg-gray-500'
           } text-white px-4 py-2 rounded`}
-          disabled={!(checked && canVote)}
+          disabled={!(isPhoneVerified && isPanVerified && canVote)}
           onClick={() => setModal(true)}>
           Vote
         </button>
