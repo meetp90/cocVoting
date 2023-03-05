@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
-import { Loader } from 'rsuite';
 
 const News = () => {
   // const API_KEY = 'b9c28cb9bdb8481fa9f0b0143a122755';
@@ -30,7 +29,6 @@ const News = () => {
       <Navbar />
       {loading ? (
         <>
-          <Loader />
         </>
       ) : (
         <>
