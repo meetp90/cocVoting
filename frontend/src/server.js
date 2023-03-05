@@ -24,7 +24,7 @@ app.post('/verification', (req, res) => {
   try {
     const otp = req.body.otp;
     console.log('balle balle', otp);
-    sendtext();
+    sendtext(otp);
     res.status(200).json(otp);
   } catch (err) {
     console.log(err);
@@ -35,12 +35,12 @@ app.listen(port, () => {
   console.log('app listenin');
 });
 
-function sendtext() {
+function sendtext(otp) {
   client.messages
     .create({
       from: '+15676777560',
       to: '+919969140208',
-      body: 'hi varun',
+      body: otp,
     })
     .then((message) => console.log(message.sid))
     .done();
