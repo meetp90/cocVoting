@@ -7,8 +7,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import OTPInput from 'otp-input-react';
 const Election = () => {
-  const { account, setTheAccount, connectingWithContract } =
-    useContext(VotingContext);
+  const { account, setTheAccount, connectingWithContract } = useContext(VotingContext);
   const [allCandidates, setAllCandidates] = useState([]);
   const [voters, setVoters] = useState([]);
   const [electionDetails, setElectionDetails] = useState([]);
@@ -17,18 +16,56 @@ const Election = () => {
   const [checked, setChecked] = useState(false);
   const [modal, setModal] = useState(false);
   const [canVote, setCanVote] = useState(false);
-  const [id, setId] = useState();
+  const [id, setId] = useState('');
   const [number, setNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [enteredOtp, setEnteredOtp] = useState('');
+<<<<<<< HEAD
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [isPanVerified, setIsPanVerified] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
+=======
+  
+  const [elections1, setElections1] = useState([]);
+  
+  const fetchElections = async () => {
+    const response = await axios.get(
+      "http://127.0.0.1:8000/openelection/"
+    );
+    console.log(response.data);
+    setElections1(response.data);
+  };
+  const getElectionDetails = async () => {
+    setTheAccount();
+    const url = window.location.href;
+    const urlArray = url.split('/');
+    const unique_id = urlArray[urlArray.length - 1];
+    setId(unique_id);
+    const contract = await connectingWithContract();
+    const response = await contract.systems(unique_id);
+    console.log(response);
+    const candidates = await contract.getCandidates(unique_id);
+    const voters = await contract.getVoters(unique_id);
+    console.log(candidates);
+    console.log(voters);
+    setAllCandidates(candidates);
+    setVoters(voters);
+    setElectionDetails(response);
+    console.log(parseInt(response.numberOfCandidates._hex));
+  };
+
+>>>>>>> 1dc99e3a6fae378bb8aebb8e92ad9c59cff396a6
   useEffect(() => {
+    
     getElectionDetails();
+    fetchElections();
     // getVotes();
   }, []);
 
+  
+  
+
+ 
   const handleVerifyOtp = () => {
     if (otp == enteredOtp) {
       toast.success('OTP Verified!', {
@@ -95,25 +132,7 @@ const Election = () => {
     });
   };
 
-  const getElectionDetails = async () => {
-    setTheAccount();
-    const url = window.location.href;
-    const urlArray = url.split('/');
-    const unique_id = urlArray[urlArray.length - 1];
-    setId(unique_id);
-    const contract = await connectingWithContract();
-    const response = await contract.systems(unique_id);
-    console.log(response);
-    const candidates = await contract.getCandidates(unique_id);
-    const voters = await contract.getVoters(unique_id);
-    console.log(candidates);
-    console.log(voters);
-    setAllCandidates(candidates);
-    setVoters(voters);
-    setElectionDetails(response);
-    console.log(parseInt(response.numberOfCandidates._hex));
-  };
-
+ 
   const voteKaro = async () => {
     const url = window.location.href;
     const urlArray = url.split('/');
@@ -206,8 +225,9 @@ const Election = () => {
     <div>
       <Navbar />
       <ToastContainer />
-
-      <div className="w-full px-36 py-16 flex flex-col gap-6">
+      {(elections1[id].election_type=="SimpleVoting")?
+       (<>
+        <div className="w-full px-36 py-16 flex flex-col gap-6">
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-3xl font-bold text-black">Voting panel</h1>
           <Link
@@ -416,6 +436,11 @@ const Election = () => {
           </div>
         </Modal>
       </div>
+      </>): (<>heeelloooo</>)}
+
+
+
+     
     </div>
   );
   // {
