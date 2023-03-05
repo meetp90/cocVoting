@@ -15,7 +15,7 @@ function Card() {
 				<div className="card">
 					<div className="content">
 						<h1>1</h1>
-						<h3>Tell us which product are you interested in</h3>
+						<h3>Register as a candidate</h3>
 						{/* <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p> */}
 					</div>
 					<background style={{ float: "right" }} alt="vector-img" />
@@ -24,7 +24,7 @@ function Card() {
 				<div className="card">
 					<div className="content">
 						<h1>2</h1>
-						<h3>Receive free quotes from our suppliers</h3>
+						<h3>Upload 1 short video explaining your campaign</h3>
 					</div>
 				</div>
 				{/* <div style={{ float: 'right', padding: '0 30% 15% 0' }} classNameName="vector">
@@ -49,7 +49,7 @@ function Card() {
 				<div className="card">
 					<div className="content">
 						<h1>3</h1>
-						<h3>Choose the best offer and Seal the Deal!</h3>
+						<h3>Voila.Your job is done. </h3>
 					</div>
 				</div>
 			</div>
