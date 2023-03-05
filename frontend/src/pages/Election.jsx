@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import OTPInput from 'otp-input-react';
 const Election = () => {
   const { account, setTheAccount, connectingWithContract } =
     useContext(VotingContext);
@@ -19,22 +19,63 @@ const Election = () => {
   const [canVote, setCanVote] = useState(false);
   const [id, setId] = useState();
   const [number, setNumber] = useState('');
+  const [otp, setOtp] = useState('');
+  const [enteredOtp, setEnteredOtp] = useState('');
 
   useEffect(() => {
     getElectionDetails();
     // getVotes();
   }, []);
 
+  const handleVerifyOtp = () => {
+    if (otp == enteredOtp) {
+      toast.success('OTP Verified!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    } else {
+      toast.error('OTP Did not Match', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    }
+  };
+
   const verifynumber = () => {
+    const otp_num = Math.floor(100000 + Math.random() * 900000);
+    console.log(otp_num);
+    setOtp(otp_num);
     const article = {
-      otp: `${Math.floor(100000 + Math.random() * 900000)}`,
+      otp: otp_num,
     };
-    console.log(number);
+    console.log(article);
     axios
       .post('http://localhost:3001/verification', article)
       .then((response) => {
         console.log(response.data);
       });
+    toast.success('OTP successfully sent', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
   };
 
   const getElectionDetails = async () => {
@@ -145,6 +186,7 @@ const Election = () => {
     <div>
       <Navbar />
       <ToastContainer />
+
       <div className="w-full px-36 py-16 flex flex-col gap-6">
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-3xl font-bold text-black">Voting panel</h1>
@@ -195,13 +237,39 @@ const Election = () => {
           />
           <button onClick={() => verifyPan()}>Verify Pan</button>
           <input
-            placeholder="Enter  number"
+            placeholder="Enter number"
             value={number}
             onChange={(e) => {
               setNumber(e.target.value);
             }}
           />
-          <button onClick={() => verifynumber()}>Verify number</button>
+          <button
+            onClick={() => {
+              verifynumber();
+            }}>
+            Verify number
+          </button>
+
+          <div className="otp_verify">
+            <OTPInput
+              value={enteredOtp}
+              onChange={setEnteredOtp}
+              autoFocus
+              OTPLength={6}
+              otpType="number"
+              disabled={false}
+            />
+            {/* 
+            <input
+              type="number"
+              value={enteredOtp}
+              onChange={(e) => {
+                console.log(e.target.value);
+                setEnteredOtp(e.target.value);
+              }}
+            /> */}
+            <button onClick={handleVerifyOtp}>check</button>
+          </div>
         </div>
         {electionDetails?.length > 0 ? (
           allCandidates.map((c) => {
