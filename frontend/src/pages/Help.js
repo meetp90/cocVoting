@@ -12,38 +12,45 @@ import {
 } from "firebase/storage";
 import { storage } from "./firebase";
 import { v4 } from "uuid";
+const videolistRef = ref(storage, "videos/");
+
 export const Help = () => {
 	const [reels, setReels] = useState([]);
 	const [file, setFile] = useState(null);
-	const videolistRef = ref(storage, "videos/");
-	const uploadImage = () => {
-		if (file == null) return;
+	// const uploadImage = () => {
+	// 	if (file == null) return;
 
-		const fileRef = ref(storage, `videos/${file.name + v4()}`);
-		uploadBytes(fileRef, file).then((snapshot) => {
-			getDownloadURL(snapshot.ref).then((url) => {
-				setvideoList((prev) => [...prev]);
-				// console.log(video);
-			});
-			alert("Video Uploaded");
-		});
-	};
+	// 	const fileRef = ref(storage, `videos/${file.name + v4()}`);
+	// 	uploadBytes(fileRef, file).then((snapshot) => {
+	// 		getDownloadURL(snapshot.ref).then((url) => {
+	// 			setvideoList((prev) => [...prev]);
+	// 			// console.log(video);
+	// 		});
+	// 		alert("Video Uploaded");
+	// 	});
+	// };
 
-	const [video, setvideoList] = useState([]);
+	// const [video, setvideoList] = useState([]);
 
-	useEffect(() => {
-		listAll(videolistRef).then((response) => {
-			response.items.forEach((item) => {
-				getDownloadURL(item).then((url) => {
-					setvideoList((prev) => [...prev, url]);
-					// console.log(video);
-					video.map((url) => {
-						setReels(url);
-					});
-				});
-			});
-		});
-	}, []);
+	// useEffect(() => {
+	// 	listAll(videolistRef).then((response) => {
+	// 		response.items.forEach((item) => {
+	// 			getDownloadURL(item).then((url) => {
+	// 				// setvideoList((prev) => {
+	//                 //     const a = [...prev, url]
+	//                 //     setReels(a)
+	//                 //     return a
+
+	//                 // })
+
+	// 				// // console.log(video);
+	// 				// video.map((url) => {
+	// 				// 	setReels(url);
+	// 				// });
+	// 			});
+	// 		});
+	// 	});
+	// }, []);
 
 	useEffect(() => {
 		const q = query(collection(db, "reels"));
@@ -51,7 +58,7 @@ export const Help = () => {
 			setReels(snapshot.docs.map((doc) => doc.data()));
 			console.log(snapshot.docs);
 		});
-		console.log(reels);
+		// console.log(reels);
 	}, []);
 
 	// const [file, setFile] = useState(""); // progress
@@ -88,12 +95,12 @@ export const Help = () => {
 
 	return (
 		<>
-			<div className="trauma-card">
+			<div className="trauma">
 				{/* <h1>Lets build A ig reels clone</h1> */}
 				<div
 					style={{ margin: "20px", paddingTop: "20px", textAlign: "center" }}
 				>
-					<h1 style={{ fontSize: "4em" }}>hi</h1>
+					<h1 style={{ fontSize: "4em" }}>CAMPAIGNS</h1>
 				</div>
 			</div>
 			<div
@@ -132,7 +139,7 @@ export const Help = () => {
 					))}
 				</div>
 			</div>
-			<div>
+			{/* <div>
 				<input
 					type="file"
 					onChange={(event) => {
@@ -140,17 +147,17 @@ export const Help = () => {
 					}}
 				/>
 				<button onClick={uploadImage}>Upload Image</button>
-			</div>
+			</div> */}
 			{/* <div>
 				{video.map((url) => {
 					return <video src={url} autoPlay />;
 				})}
 			</div> */}
-			<div className="app_videos">
+			{/* <div className="app_videos">
 				{video.map((url) => (
 					<Video url={url} />
 				))}
-			</div>
+			</div> */}
 			{/* <div>
 				<input type="file" onChange={handleChange} accept="/image/*" />
 				<button onClick={handleUpload}>Upload to Firebase</button>

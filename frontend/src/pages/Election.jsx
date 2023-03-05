@@ -6,9 +6,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import OTPInput from 'otp-input-react';
+
 const Election = () => {
   const { account, setTheAccount, connectingWithContract } =
     useContext(VotingContext);
+  useEffect(() => {
+    fetchElections();
+  }, []);
+
   const [allCandidates, setAllCandidates] = useState([]);
   const [voters, setVoters] = useState([]);
   const [electionDetails, setElectionDetails] = useState([]);
@@ -24,13 +29,13 @@ const Election = () => {
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [isPanVerified, setIsPanVerified] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
-
   const [elections1, setElections1] = useState([]);
 
   const fetchElections = async () => {
-    const response = await axios.get('http://127.0.0.1:8000/openelection/');
-    console.log(response.data);
-    setElections1(response.data);
+    const response = JSON.parse(localStorage.getItem('election'));
+    console.log(response);
+    setElections1(response);
+    getElectionDetails();
   };
   const getElectionDetails = async () => {
     setTheAccount();
@@ -49,16 +54,18 @@ const Election = () => {
     setVoters(voters);
     setElectionDetails(response);
     console.log(parseInt(response.numberOfCandidates._hex));
+    console.log();
+    console.log(elections1[id - 1].election_type);
   };
 
   useEffect(() => {
-    getElectionDetails();
     fetchElections();
+    getElectionDetails();
     // getVotes();
   }, []);
 
   const handleVerifyOtp = () => {
-    if (otp == enteredOtp) {
+    if (otp === enteredOtp) {
       toast.success('OTP Verified!', {
         position: 'top-right',
         autoClose: 5000,

@@ -7,7 +7,7 @@ html {
     place-items: center;
     height: 100vh;
   } */
-.trauma {
+.card {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
@@ -24,17 +24,15 @@ html {
 	height: 12vh;
 }
 
-.app_videos {
+.videos {
 	position: relative;
 	height: 65vh;
 	background-color: white;
 	width: 50%;
 	border-radius: 20px;
-	max-width: 250px;
+	max-width: 700px;
 	max-height: 1500px;
 	overflow: scroll;
-	
-
 	scroll-snap-type: y mandatory;
 }
 
