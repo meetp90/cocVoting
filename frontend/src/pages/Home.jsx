@@ -1,20 +1,20 @@
-import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { VotingContext } from "../context";
-import homeImage from "../assets/homevoting.svg";
-import Card from "./Card";
-import homebg from "../assets/home-bg.jpg";
-import axios from "axios";
+import React, { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import { VotingContext } from '../context';
+import homeImage from '../assets/homevoting.svg';
+import Card from './Card';
+import homebg from '../assets/home-bg.jpg';
+import axios from 'axios';
 const Home = () => {
   const { account, setTheAccount } = useContext(VotingContext);
   const options = {
-    method: "POST",
-    url: "https://pan-card-verification1.p.rapidapi.com/v3/tasks/sync/verify_with_source/ind_pan",
+    method: 'POST',
+    url: 'https://pan-card-verification1.p.rapidapi.com/v3/tasks/sync/verify_with_source/ind_pan',
     headers: {
-      "content-type": "application/json",
-      "X-RapidAPI-Key": "618b6ec4abmsh228074d51b65ea4p1f72d8jsn8883234e6b85",
-      "X-RapidAPI-Host": "pan-card-verification1.p.rapidapi.com",
+      'content-type': 'application/json',
+      'X-RapidAPI-Key': '618b6ec4abmsh228074d51b65ea4p1f72d8jsn8883234e6b85',
+      'X-RapidAPI-Host': 'pan-card-verification1.p.rapidapi.com',
     },
     data: '{"task_id":"74f4c926-250c-43ca-9c53-453e87ceacd1","group_id":"8e16424a-58fc-4ba4-ab20-5bc8e7c3c41e","data":{"id_number":"NNDPS4508E"}}',
   };
@@ -35,7 +35,9 @@ const Home = () => {
   return (
     <div>
       <Navbar />
-      <div className="flex flex-row items-center p-20" style={{ backgroundImage: `url(${homebg})` }}>
+      <div
+        className="flex flex-row items-center p-20"
+        style={{ backgroundImage: `url(${homebg})`, height: '99vh' }}>
         <div>
           <img className="w-[70vw]" src={homeImage} />
         </div>
@@ -43,31 +45,29 @@ const Home = () => {
           {account.length > 0 ? (
             <div className="flex flex-col items-between">
               <h1 className="text-white text-3xl font-semibold mt-4">
-               The future is in your hands,
-               <br/>
+                The future is in your hands,
+                <br />
                 Choose wisely
               </h1>
               <h1 className="text-[#6bcadb] text-5xl font-bold mt-4">
                 Vote Today.
               </h1>
-              <br/>
+              <br />
               <div className="flex flex-row justify-around  ">
                 <Link
                   onClick={() => {
-                    localStorage.setItem("status", "helder");
+                    localStorage.setItem('status', 'helder');
                   }}
                   to="/add-election"
-                  className="text-black bg-[#ffffff] hover:bg-[#6bcadb] font-bold p-2 mt-4 w-[180px] text-center rounded-lg"
-                >
+                  className="text-black bg-[#ffffff] hover:bg-[#6bcadb] font-bold p-2 mt-4 w-[180px] text-center rounded-lg">
                   <h1 className="text-black font-bold ">Hold an Election</h1>
                 </Link>
                 <Link
                   onClick={() => {
-                    localStorage.setItem("status", "voter");
+                    localStorage.setItem('status', 'voter');
                   }}
                   to="/elections"
-                  className="text-black hover:bg-[#6bcadb] bg-[#ffffff] font-bold p-2 mt-4 w-[180px] text-center rounded-lg"
-                >
+                  className="text-black hover:bg-[#6bcadb] bg-[#ffffff] font-bold p-2 mt-4 w-[180px] text-center rounded-lg">
                   Vote
                 </Link>
               </div>
@@ -75,18 +75,17 @@ const Home = () => {
           ) : (
             <div className="flex flex-col items-between">
               <h1 className="text-white text-3xl font-semibold mt-4">
-              Your Vote, Your Power
+                Your Vote, Your Power
               </h1>
               <h1 className="text-[#6bcadb] text-5xl font-bold mt-4">
                 Vote Today
               </h1>
-              <br/>
+              <br />
               <button
                 onClick={() => {
                   setTheAccount();
                 }}
-                className="text-black rounded-lg border-solid border-4 border-[#6bcadb] drop-shadow-md hover:bg-[#6bcadb] bg-[#F5F5F5] p-2 mt-4"
-              >
+                className="text-black rounded-lg border-solid border-4 border-[#6bcadb] drop-shadow-md hover:bg-[#6bcadb] bg-[#F5F5F5] p-2 mt-4">
                 Connect Wallet
               </button>
             </div>
@@ -113,7 +112,38 @@ const Home = () => {
           </h1>
         </div>
       </div>
-      <Card />
+      <div className="home-cards-bg p-2" style={{ backgroundColor: '#121113' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-start',
+            flex: 'column',
+            height: '40rem',
+          }}
+          className="container features_section">
+          <h1
+            style={{
+              transform: 'rotate(-90deg)',
+              fontWeight: '700',
+              fontSize: '100px',
+              color: '#6bcadb',
+            }}
+            className="features_text">
+            Features
+          </h1>
+          <div
+            style={{
+              fontSize: '3rem',
+              color: 'white',
+            }}
+            className="features_list">
+            <div className="feature_item">Security</div>
+            <div className="feature_item">Scalability</div>
+            <div className="feature_item">Tamper Proof</div>
+            <div className="feature_item">Something else</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

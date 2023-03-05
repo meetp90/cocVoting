@@ -1,9 +1,11 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <div className="w-full flex px-36 py-4 justify-between items-center bg-[#000000]">
+    <div
+      className="w-full flex px-36 py-4 justify-between items-center
+      bg-[#121113]">
       <div className="flex">
         <h1 className="text-2xl font-bold text-white">DecentVote.</h1>
       </div>
