@@ -9,7 +9,7 @@ import OTPInput from 'otp-input-react';
 
 const Election = () => {
   useEffect(() => {
-    fetchElections();
+    getElectionDetails();
   }, []);
   const { account, setTheAccount, connectingWithContract } = useContext(VotingContext);
   const [allCandidates, setAllCandidates] = useState([]);
@@ -30,12 +30,12 @@ const Election = () => {
   
   const [elections1, setElections1] = useState([]);
   
-  const fetchElections = async () => {
-    const response = JSON.parse(localStorage.getItem("election"))
-    console.log(response);
-    setElections1(response);
-    getElectionDetails();
-  };
+  // const fetchElections = async () => {
+  //   const response = JSON.parse(localStorage.getItem("election"))
+  //   console.log(response);
+  //   setElections1(response);
+   
+  // };
   const getElectionDetails = async () => {
     setTheAccount();
     const url = window.location.href;
@@ -57,12 +57,6 @@ const Election = () => {
     console.log(elections1[id-1].election_type)
   };
 
-  useEffect(() => {
-    
-    getElectionDetails();
-    fetchElections();
-    // getVotes();
-  }, []);
 
   
   
@@ -225,10 +219,10 @@ const Election = () => {
 
   return (
     <div>
+      <>
       <Navbar />
       <ToastContainer />
-      {( elections1[id-1].election_type == "SimpleVoting")?
-       (<>
+      
         <div className="w-full px-36 py-16 flex flex-col gap-6">
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-3xl font-bold text-black">Voting panel</h1>
@@ -438,7 +432,7 @@ const Election = () => {
           </div>
         </Modal>
       </div>
-      </>): (<>heeelloooo</>)}
+      </>
    
 
      
