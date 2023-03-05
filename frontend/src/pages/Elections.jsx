@@ -52,7 +52,9 @@ const Elections = () => {
   }, []);
 
   const fetchElections = async () => {
-    const response = await axios.get('http://127.0.0.1:8000/openelection/');
+    const response = await axios.get(
+      "http://127.0.0.1:8000/openelection/"
+    );
     console.log(response.data);
     setElections(response.data);
   };
